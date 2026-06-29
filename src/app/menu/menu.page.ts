@@ -35,7 +35,8 @@ export class MenuPage implements OnInit {
       cod_persona: id_persona  // ⚠️ Verifica cómo espera recibir PHP tu ID
     };
     this.servicio.sendData(datos, 'persona').subscribe((res: any) => {
-      if(res.estado){
+      console.log("Repuesta de PHP en Menu:",res);
+      if(res && res.estado ==true){
         this.datospersona = res.persona;
         this.nombre = this.datospersona.nombre + " " + this.datospersona.apellido;
       }
@@ -44,7 +45,7 @@ export class MenuPage implements OnInit {
 
   lcontactos(id_persona: string) {
     let datos = {
-      accion: 'consulta', 
+      accion: 'consultar', 
       cod_persona: id_persona
     };
     this.servicio.sendData(datos, 'contacto').subscribe((res: any) => {
@@ -52,7 +53,8 @@ export class MenuPage implements OnInit {
         this.contactos=res.contactos
       }
       else{
-        this.servicio.showToast(res.mensaje,3000)
+        this.servicio.showToast(res.mensaje,3000);
+        console.log("No se pudieron cargar los datos del usuario o la respuesta fue null");
       }
     })
   }

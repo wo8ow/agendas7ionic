@@ -1,13 +1,31 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>contacto</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis Contactos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">contacto</ion-title>
+      <ion-title size="large">Mis Contactos</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list *ngIf="contactos.length > 0">
+    <ion-item *ngFor="let c of contactos">
+      <ion-icon name="person-circle-outline" slot="start" size="large" color="primary"></ion-icon>
+      <ion-label>
+        <h2>{{ c.nombre }} {{ c.apellido }}</h2>
+        <p>Tel: {{ c.telefono }}</p>
+        <p *ngIf="c.correo">Correo: {{ c.correo }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-text-center ion-padding" *ngIf="contactos.length === 0">
+    <p>No tienes contactos registrados.</p>
+  </div>
 </ion-content>
