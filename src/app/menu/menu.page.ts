@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { Acceso } from '../servicio/acceso';
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
