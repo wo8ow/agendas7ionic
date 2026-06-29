@@ -5,9 +5,23 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-label>Bienvenido {{nombre}}</ion-label>
+  </ion-item>
+  <ion-list>
+    <ion-item-sliding>
+      <ion-avatar>
+        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label>
+        <b>Nombre: </b>
+        <br>
+        <b>Telefono: </b>
+      </ion-label>
+      <ion-item-options side="end">
+        <ion-item-option color="warning">Editar</ion-item-option>
+        <ion-item-option color="danger">Eliminar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

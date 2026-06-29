@@ -8,8 +8,8 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Acceso {
-  persona: string   = "hhttp://localhost/WS26AGENDA\Api/persona.php";
-  contacto: string = "http://localhost/WS26AGENDA\Api/contacto.php";
+  persona: string   = "http://localhost/WS26AGENDA/Api/persona.php";
+  contacto: string = "http://localhost/WS26AGENDA/Api/contacto.php";
   server: string = "";
   constructor(private toastCtrl: ToastController, private http: HttpClient) {} 
     sendData(cuerpo: any, tabla: string) {
@@ -19,7 +19,7 @@ export class Acceso {
       else {
         this.server = this.contacto;
       }
-      let head= new HttpHeaders({'Content-Type': 'application/json', charset: 'UTF-8'});
+      let head= new HttpHeaders({'Content-Type': 'application/json'});
       let options = { headers: head };
       return this.http.post(this.server, JSON.stringify(cuerpo), options);
     }

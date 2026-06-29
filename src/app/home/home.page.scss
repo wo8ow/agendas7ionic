@@ -1,6 +1,6 @@
-/* Fondo principal */
-.github-login-bg {
-  --background: #0d1117; 
+/* Fondo principal Light Mode */
+.github-light-bg {
+  --background: #f6f8fa; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,49 +14,50 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  max-width: 320px; /* Ancho típico de GitHub */
+  max-width: 320px; 
   margin: 0 auto;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-/* Estilos del Logo y Título */
+/* Estilos del Título de Bienvenida */
 .logo-container {
   text-align: center;
   margin-bottom: 20px;
 
-  .github-logo {
-    font-size: 48px;
-    color: #e6edf3;
+  .welcome-title {
+    color: #24292f;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 5px;
   }
 
-  h1 {
-    color: #e6edf3;
-    font-size: 24px;
-    font-weight: 300;
-    letter-spacing: -0.5px;
-    margin-top: 15px;
+  .login-subtitle {
+    color: #57606a;
+    font-size: 14px;
+    margin: 0;
   }
 }
 
-/* La tarjeta gris oscura que envuelve los inputs */
+/* La tarjeta blanca que envuelve los inputs */
 .login-card {
-  background-color: #161b22;
-  border: 1px solid #21262d;
+  background-color: #ffffff;
+  border: 1px solid #d0d7de;
   border-radius: 6px;
   padding: 20px;
   width: 100%;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(31,35,40,0.12);
 
   .input-group {
     margin-bottom: 15px;
 
     label {
       display: block;
-      color: #e6edf3;
+      color: #24292f;
       font-size: 14px;
       margin-bottom: 8px;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .password-header {
@@ -65,7 +66,7 @@
       align-items: center;
 
       .forgot-link {
-        color: #2f81f7;
+        color: #0969da;
         font-size: 12px;
         text-decoration: none;
 
@@ -75,56 +76,58 @@
       }
     }
 
-    /* Estilización de los inputs de Ionic */
+    /* Estilización de los inputs estilo GitHub Light */
     .github-input {
-      --background: #0d1117;
-      --color: #e6edf3;
+      --background: #ffffff;
+      --color: #24292f;
       --padding-start: 12px;
       --padding-end: 12px;
       --padding-top: 10px;
       --padding-bottom: 10px;
-      border: 1px solid #30363d;
+      border: 1px solid #d0d7de;
       border-radius: 6px;
       font-size: 14px;
       transition: 0.2s ease-in-out;
 
       &.ion-focused {
-        border-color: #2f81f7;
-        box-shadow: 0 0 0 3px rgba(47, 129, 247, 0.3);
+        border-color: #0969da;
+        box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.3);
       }
     }
   }
 
-  /* Botón verde característico */
+  /* Botón verde característico de GitHub Light */
   .github-btn {
-    --background: #238636;
-    --background-hover: #2ea043;
+    --background: #2da44e;
+    --background-hover: #2c974b;
     --color: #ffffff;
     --border-radius: 6px;
     --box-shadow: none;
     margin-top: 20px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
-    text-transform: none; /* Quita las mayúsculas por defecto de Ionic */
+    text-transform: none; 
     letter-spacing: normal;
   }
 }
 
-/* Caja inferior secundaria */
+/* Caja inferior secundaria de registro */
 .create-account-box {
   margin-top: 18px;
   padding: 15px 20px;
-  background-color: transparent;
-  border: 1px solid #30363d;
+  background-color: #ffffff;
+  border: 1px solid #d0d7de;
   border-radius: 6px;
   text-align: center;
-  color: #e6edf3;
+  color: #24292f;
   font-size: 14px;
   width: 100%;
+  box-shadow: 0 1px 3px rgba(31,35,40,0.12);
 
   a {
-    color: #2f81f7;
+    color: #0969da;
     text-decoration: none;
+    font-weight: 500;
 
     &:hover {
       text-decoration: underline;
