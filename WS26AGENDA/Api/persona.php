@@ -1,11 +1,21 @@
 <?php
     require_once('../Modelo/cls_conexion.php');
+    
+    // 1. CONFIGURACIÓN DE CORS (Limpiada y unificada)
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Credentials: true');
     header('Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS');
-    header('Access-Control-Allow-Headers: origin, content-type, Authorization, Accept, X-Request-With, x-xsrf-token');
+    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization, x-xsrf-token");
     header('Content-Type: application/json; charset=utf-8');
-
+    
+    // 2. INTERCEPTAR PETICIÓN PREFLIGHT (OPTIONS) DE IONIC
+    // Si la petición es OPTIONS, devolvemos código 200 y salimos, esto evita el error CORS
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        http_response_code(200);
+        exit();
+    }
+    
+    // 3. LECTURA DE DATOS
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (!$data || !isset($data['accion'])) {
@@ -33,10 +43,8 @@
     else if ($data['accion'] == "obtener_pregunta") {
         $conex = (new Cls_conexion())->conectar();
         $usuario = mysqli_real_escape_string($conex, $data['usuario']); // ci_persona
-        
         $sentencia = "SELECT pregunta_seguridad FROM persona WHERE ci_persona='$usuario'";
         $rs = mysqli_query($conex, $sentencia);
-        
         if (mysqli_num_rows($rs) > 0) {
             $row = mysqli_fetch_assoc($rs);
             if (!empty($row['pregunta_seguridad'])) {
@@ -49,7 +57,33 @@
         }
     }
 
-    // 3. VERIFICAR RESPUESTA Y CAMBIAR CONTRASEÑA
+     // 3. CONSULTA (CORREGIDO ERROR SINTAXIS Y ECHO)
+    else if ($data['accion'] == "consulta") {
+        $conex = (new Cls_conexion())->conectar();
+        
+        // Corrección: Agregado el "sprintf" y "mysqli_real_escape_string" por seguridad
+        $sentencia = sprintf("SELECT * FROM persona WHERE cod_persona='%s'", 
+            mysqli_real_escape_string($conex, $data['cod_persona']));
+            
+        $rs = mysqli_query($conex, $sentencia);
+        if (mysqli_num_rows($rs) > 0) {
+            $row = mysqli_fetch_assoc($rs);
+            $datos = array(
+                // OJO: Cambié 'co_persona' a 'cod_persona', verifica cómo se llama exactamente en tu BD
+                "codigo" => $row['cod_persona'],    
+                "nombre" => $row['nom_persona'],
+                "apellido" => $row['ape_persona'],
+            );
+            // Corrección: Cambiado a "echo" para que devuelva la respuesta al frontend
+            echo json_encode(array("estado"=>true, "persona"=>$datos));
+        }
+        else{
+            // Corrección: Cambiado a "echo"
+            echo json_encode(array("estado"=>false, "mensaje"=>"No existe los datos de la persona"));
+        }
+    }
+
+    // 4. VERIFICAR RESPUESTA Y CAMBIAR CONTRASEÑA
     else if ($data['accion'] == "restablecer_por_pregunta") {
         $conex = (new Cls_conexion())->conectar();
         $usuario = mysqli_real_escape_string($conex, $data['usuario']);
