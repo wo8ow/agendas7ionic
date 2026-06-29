@@ -1,61 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Acceso } from '../servicio/acceso';
-
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  standalone: false,
 })
 export class MenuPage implements OnInit {
-  id_persona: string ="";
-  datospersona: any = [];
-  nombre: string = "";
-  contactos: any = [];
+  // Variables para almacenar los datos del usuario si deseas mostrarlos
+  nombre: string = '';
+  apellido: string = '';
+
   constructor(
-    public servicio: Acceso,
-    public navCtrl: NavController,
-  ) {
-    this.servicio.getSession('idpersona').then((res:any) => {
-      this.id_persona = res;
-      this.dpersona(this.id_persona);
-      this.lcontactos(this.id_persona);
-    })
-  }
-  ngOnInit() {}
+    private navCtrl: NavController,
+    private acceso: Acceso
+  ) { }
 
-  dpersona(id_persona: string) {
-    let datos = {
-      accion: 'consulta', // ⚠️ Verifica en tu persona.php cómo se llama exactamente esta acción ('consulta', 'datos', etc.)
-      cod_persona: id_persona  // ⚠️ Verifica cómo espera recibir PHP tu ID
-    };
-    this.servicio.sendData(datos, 'persona').subscribe((res: any) => {
-      console.log("Repuesta de PHP en Menu:",res);
-      if(res && res.estado ==true){
-        this.datospersona = res.persona;
-        this.nombre = this.datospersona.nombre + " " + this.datospersona.apellido;
-      }
-    });
+  ngOnInit() {
+    // La carga inicial puede permanecer aquí
   }
 
-  lcontactos(id_persona: string) {
-    let datos = {
-      accion: 'consultar', 
-      cod_persona: id_persona
-    };
-    this.servicio.sendData(datos, 'contacto').subscribe((res: any) => {
-      if(res.estado){
-        this.contactos=res.contactos
-      }
-      else{
-        this.servicio.showToast(res.mensaje,3000);
-        console.log("No se pudieron cargar los datos del usuario o la respuesta fue null");
-      }
-    })
+  async ionViewWillEnter() {
+    // Al entrar al menú, consultamos quién inició sesión
+    const cod_persona = (await this.acceso.getSession('idpersona')) || ''; 
+    
+    if (cod_persona) {
+      let datos = { accion: 'consulta', cod_persona: cod_persona };
+      this.acceso.sendData(datos, 'persona').subscribe((res: any) => {
+        if (res && res.estado == true) {
+          this.nombre = res.persona.nombre;
+          this.apellido = res.persona.apellido;
+        }
+      });
+    }
+  }
+
+  // --- CONTROLADORES DE NAVEGACIÓN ---
+
+  // Método que redirige a la página de Contactos (Tu Agenda)
+  abrirAgenda() {
+    this.navCtrl.navigateForward('/contacto');
+  }
+
+  // Método opcional pero recomendado para salir de la app
+  cerrarSesion() {
+    this.acceso.closeSession();
+    this.navCtrl.navigateRoot('/home'); // Retorna al Login y limpia el historial
   }
 }

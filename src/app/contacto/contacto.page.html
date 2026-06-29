@@ -7,25 +7,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Mis Contactos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <ion-button expand="block" color="success" (click)="nuevoContacto()" class="ion-margin-bottom">
+    <ion-icon name="person-add-outline" slot="start"></ion-icon>
+    Agregar Nuevo Contacto
+  </ion-button>
 
   <ion-list *ngIf="contactos.length > 0">
     <ion-item *ngFor="let c of contactos">
       <ion-icon name="person-circle-outline" slot="start" size="large" color="primary"></ion-icon>
+      
       <ion-label>
         <h2>{{ c.nombre }} {{ c.apellido }}</h2>
         <p>Tel: {{ c.telefono }}</p>
-        <p *ngIf="c.correo">Correo: {{ c.correo }}</p>
       </ion-label>
+
+      <ion-button fill="clear" color="warning" slot="end" (click)="editarContacto(c)">
+        <ion-icon name="pencil" slot="icon-only"></ion-icon>
+      </ion-button>
+      
+      <ion-button fill="clear" color="danger" slot="end" (click)="confirmarEliminar(c)">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+
     </ion-item>
   </ion-list>
 
   <div class="ion-text-center ion-padding" *ngIf="contactos.length === 0">
     <p>No tienes contactos registrados.</p>
   </div>
+
 </ion-content>
