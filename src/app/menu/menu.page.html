@@ -9,19 +9,21 @@
     <ion-label>Bienvenido {{nombre}}</ion-label>
   </ion-item>
   <ion-list>
+    @for(fila of contactos; track fila.codigo){
     <ion-item-sliding>
       <ion-avatar>
         <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
       <ion-label>
-        <b>Nombre: </b>
+        <b>Nombre: </b> {{fila.nombre}} {{fila.apellido}}
         <br>
-        <b>Telefono: </b>
+        <b>Telefono: </b>{{fila.telefono}}
       </ion-label>
       <ion-item-options side="end">
         <ion-item-option color="warning">Editar</ion-item-option>
         <ion-item-option color="danger">Eliminar</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
+    }
   </ion-list>
 </ion-content>

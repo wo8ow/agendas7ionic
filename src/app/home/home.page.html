@@ -33,10 +33,11 @@
           </ion-input>
         </div>
 
-        <ion-button expand="block" class="github-btn" (click)="login()">
+        <ion-button expand="block" class="github-btn" id="open-loading" (click)="login()">
           Iniciar sesión
         </ion-button>
       </form>
+      <ion-loading trigger="open-loading" message="Verificando" duration="3000"></ion-loading>
     </div>
 
     <div class="create-account-box">
